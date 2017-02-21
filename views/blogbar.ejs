@@ -1,0 +1,22 @@
+<div class="blogbar">
+	
+		<p>Followed blogs</p>
+		<% for(var i = 0 ; i < follows.length ; ++i) { %>
+			<% var follow = follows[i]; %>
+			<a href="/api/blog/<%= follow.blogId %>">
+			<%= follow.blogId %><br>
+			</a>
+		<% } %>
+		<p>My blogs</p>
+		<% for(var i = 0 ; i < blogs.length ; ++i) { %>
+			<% var blog = blogs[i]; %>
+			<a href="/api/blog/<%= blog.id %>">
+			<%= blog.name %><br>
+			</a>
+		<% } %>
+		<form action="/api/blog" method="post" >
+			<input type="text" name="name" placeholder="name"> 
+			<input type="submit" name="newBlogButton" value="New blog">
+		</form> 
+    
+</div>

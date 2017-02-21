@@ -1,0 +1,15 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+			<% if(!authenticated) { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+			<% } else { %>
+			<p><%= username %></p>
+			<li><a href="/logout">Logout</a></li>
+            <li><a href="/settings">Settings</a></li>
+			<li><a href="/">Front page</a></li>
+			<% } %>
+        </ul>
+    </div>
+</nav>

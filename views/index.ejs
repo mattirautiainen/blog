@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tamplr</title>
+    <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+	<% include navbar %>
+	<h1 class="tamplr-logo">tamplr</h1>
+	<% if(authenticated) { %>
+		<% include blogbar %>
+	<% } %>
+	
+	<p> New blogposts:</p>
+    <ul>
+    <% for(var i=blogposts.length-1 ; i > blogposts.length-11 ; --i) {%>
+      <% var bp = blogposts[i];  %>
+	  <% if(!bp) { break;} %>
+      <li>
+        <a href="/api/post/<%= bp.id %>">
+          Title: <%= bp.title %>, 
+		  Author: <%= bp.author %>, 
+		  Blog: <%= bp.blog %>
+        </a>
+      </li>
+    <% } %>
+    </ul>
+  </body>
+</html>

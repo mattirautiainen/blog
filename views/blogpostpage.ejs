@@ -1,0 +1,42 @@
+<% include navbar %>
+
+Blog: <a href="/api/blog/<%= blogpost.blog %>"><%= blogpost.blog %></a><br>
+
+Title: <%= blogpost.title %><br>
+Author: <%= blogpost.author %><br>
+Likes: <%= likes.length %><br>
+Text: <%= blogpost.text %><br>
+
+<% if(authenticated) { %>
+
+	<% var liker = false; %>
+	<% for(var i = 0 ; i < likes.length ; ++i) { %> 
+		<% if(likes[i].username == username) { %>
+			<% liker = true; %>
+			<% break; %>
+		<% } %>
+	<% } %>
+	<% if(!liker) {%>
+		<form action="/api/user/<%= username %>/addlike/<%= blogpost.id %>" method="post">
+			<input type="submit" name="likeButton" value="Like">
+		</form>
+	<% } else { %>
+		<form action="/api/user/<%= username %>/deletelike/<%= blogpost.id %>" method="post">
+			<input type="submit" name="unlikeButton" value="Unlike">
+		</form>
+	<% } %>
+	
+	<p> Comments: </p>
+
+	<% for(var i = 0 ; i < comments.length ; ++i) { %>
+		<%= comments[i].text %>
+		<%= comments[i].author %>
+		<br>
+	<% } %>
+	
+	<form action="/api/post/<%= blogpost.id %>/comments" method="post">
+		<input type="text" name="text" placeholder="text">
+		<input type="submit" name="newCommentButton" value="Submit comment">
+	</form>
+
+<% } %>

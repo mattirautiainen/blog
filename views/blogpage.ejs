@@ -1,0 +1,54 @@
+	<% include navbar %>
+	<p>New blogposts</p>
+	<% for(var i=blogposts.length-1 ; i > blogposts.length-11 ; --i) {%>
+      <% var bp = blogposts[i];  %>
+	  <% if(!bp) { break;} %>
+      <li>
+        <a href="/api/post/<%= bp.id %>">
+          Title: <%= bp.title %>, 
+		  Author: <%= bp.author %>, 
+		  Likes: <%= bp.likes %>
+        </a>
+      </li>
+    <% } %>
+	
+	<% if(authenticated) { %>
+		<% var blogfollower = false; %>
+		<% for(var i = 0; i < followers.length ; ++i) { %>
+			<% if(username == followers[i].username) { %>
+				<% blogfollower = true; %>
+			<% } %>
+		<% } %>
+		<% if(!blogfollower) { %>
+			<form action="/api/user/<%= username %>/addfollow/<%= blog.id %>" method="post">
+				<input type="submit" name="addFollowButton" value="Follow blog">
+			</form>
+		<% } else { %>
+			<form action="/api/user/<%= username %>/deletefollow/<%= blog.id %>" method="post">
+				<input type="submit" name="deleteFollowButton" value="Unfollow blog">
+			</form>
+		<% } %>
+	<% } %>
+	
+	<% if(authorized) { %>
+		
+		<form action="/api/blog/<%= blog.id %>/posts" method="post" id="newblogpost">
+			<input type="text" name="title" placeholder="title">
+			<input type="submit" name="newBlogPostButton" value="Submit blogpost">
+		</form>
+		<textarea rows="4" cols="50" name="text" placeholder="text" form="newblogpost"></textarea>
+
+		<p>Users:</p>
+		<% for(var i = 0 ; i < users.length ; ++i) { %>
+			<form action="/api/blog/<%= blog.id %>/deleteuser" method="post">
+				<a href="/api/user/<%= users[i].username %>"><%= users[i].username %></a>
+				<input type="hidden" name="username" value="<%= users[i].username %>">
+				<input type="submit" name="deleteUserButton" value="Delete user">
+			</form>
+		<% } %>
+		<form action="/api/blog/<%= blog.id %>/adduser" method="post">
+			<input type="text" name="username" placeholder="username">
+			<input type="submit" name="addUserButton" value="Add user">
+		</form>
+		
+	<% } %>
